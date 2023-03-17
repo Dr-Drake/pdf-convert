@@ -4,6 +4,9 @@ This is a web application that extracts text from PDF documents by converting th
 ## Demo Website
 :point_right: Coming soon...
 
+## Video Demo
+:point_right: https://youtu.be/Y393jGsafWk
+
 ## Getting Started
 First install the dependencies
 
