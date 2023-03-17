@@ -2,7 +2,6 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import { generateAsciiArt } from './utils/generateAsciiArt';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import { removeFile } from './utils/removeFile';

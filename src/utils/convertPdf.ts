@@ -25,13 +25,15 @@ export async function convertPdf(filePath: string, type: ConversionType = Conver
         let output = '';
 
         pythonProcess.stdout.on('data', (data: Buffer) => {
-            // console.log(data.toString())
+            console.log(data.toString())
             output += data.toString();
         });
 
         pythonProcess.stderr.on('data', (data: Buffer) => {
             console.error(`Error: ${data}`);
-            reject();
+            if (type === ConversionType.TEXT) {
+                reject();
+            }
         });
 
         pythonProcess.on('close', (code: number) => {

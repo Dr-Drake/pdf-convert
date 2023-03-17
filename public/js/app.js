@@ -4,6 +4,7 @@ const button = document.getElementById('cbtn');
 const inputImage = document.getElementById('i-img');
 const spinner = document.getElementById('l-spinner');
 const linkDiv = document.getElementById('link-view');
+const selectEl = document.getElementById('format-select');
 
 /** Variables */
 const maxFileSize = (1024 * 1024) * 8; // 8MB
@@ -11,9 +12,11 @@ let selectedFile;
 
 /** Helper functions */
 function displayFileLink(url) {
+    let ext = selectEl.value === 'text' ? '.txt' : '.docx';
+
     const downloadLink = document.createElement('a');
     downloadLink.href = url;
-    downloadLink.download = selectedFile.name.replace(/\.[^/.]+$/, '.txt');
+    downloadLink.download = selectedFile.name.replace(/\.[^/.]+$/, ext);
 
     const iconContainer = document.createElement('div');
     iconContainer.setAttribute('class', 'd-flex flex-column align-items-center');
@@ -23,7 +26,7 @@ function displayFileLink(url) {
     icon.setAttribute('style', 'font-size: 5rem;');
 
     const fileTextElement = document.createElement('p');
-    fileTextElement.innerText = selectedFile.name.replace(/\.[^/.]+$/, '.txt');
+    fileTextElement.innerText = selectedFile.name.replace(/\.[^/.]+$/, ext);
 
     // Add the download link to the display
     iconContainer.appendChild(icon);
@@ -54,9 +57,25 @@ fileInput.addEventListener('change', (event) => {
             return;
         }
         clearFileLink();
-        button.removeAttribute('disabled');
+        
+        if (selectEl.value) {
+            button.removeAttribute('disabled');
+        }
     }
 });
+
+/**
+ * On Change event listener for the select
+ */
+selectEl.addEventListener('change', ()=>{
+    const selectedValue = selectEl.value;
+    console.log(selectedValue);
+    clearFileLink();
+
+    if (selectedFile) {
+        button.removeAttribute('disabled');
+    }
+})
 
 /**
  * Click event listener for button
@@ -74,7 +93,7 @@ button.addEventListener('click', () => {
     form.append('file', selectedFile);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/convert?type=text');
+    xhr.open('POST', `/convert?type=${selectEl.value ? selectEl.value : 'text'}`);
     xhr.responseType = 'blob'; // Set the response type to 'blob' to receive a binary response
     xhr.send(form);
     
