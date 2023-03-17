@@ -2,7 +2,7 @@ import sys
 import os
 from pdfminer.high_level import extract_text
 
-# Get the filename of the input image from the command-line arguments
+# Get the filename of the input file from the command-line arguments
 if len(sys.argv) < 2:
     print("Usage: python pdf2text.py <filePath>")
     sys.exit(1)
